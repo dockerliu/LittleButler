@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>小管家 · 轻松记账</title>
+<meta name="description" content="10 秒记完一笔，月底一眼看清钱去哪了。">
+<meta name="theme-color" content="#2a78d6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="toast" class="toast" role="status" hidden></div>
+
+<!-- V1.0.1 本机账户锁：未登录时覆盖全屏 -->
+<div id="lock" class="lock" hidden></div>
+
+<div id="app-root" class="app" hidden>
+
+  <!-- Tab1 明细（首页） -->
+  <section id="view-detail" class="view">
+    <header class="topbar">
+      <button id="d-prev" class="icon-btn" aria-label="上一月">‹</button>
+      <h2 id="d-month" class="topbar-title">—</h2>
+      <button id="d-next" class="icon-btn" aria-label="下一月">›</button>
+      <button id="d-filter" class="filter-btn">筛选<span id="d-filter-dot" class="dot" hidden></span></button>
+    </header>
+    <div id="d-summary" class="summary-card"></div>
+    <div id="d-list" class="bill-list"></div>
+    <div id="d-empty" class="empty" hidden>本月暂无记录，点右下角「＋」记一笔吧</div>
+    <div id="d-more" class="list-more" hidden><button class="btn ghost" id="d-more-btn">加载更多</button></div>
+  </section>
+
+  <!-- Tab2 统计 -->
+  <section id="view-stats" class="view" hidden>
+    <header class="topbar">
+      <button id="s-prev" class="icon-btn" aria-label="上一月">‹</button>
+      <h2 id="s-month" class="topbar-title">—</h2>
+      <button id="s-next" class="icon-btn" aria-label="下一月">›</button>
+    </header>
+    <div id="s-overview" class="kpi-row"></div>
+    <div class="card">
+      <div class="card-head"><h3>分类占比</h3><span class="card-sub">支出</span></div>
+      <div id="s-cat" class="cat-bars"></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h3>供应商排行</h3><span class="card-sub">支出 Top5</span></div>
+      <div id="s-supplier" class="cat-bars"></div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <h3>每日支出</h3>
+        <div id="s-daily-seg" class="seg mini" role="group" aria-label="每日支出视图切换"></div>
+      </div>
+      <div id="s-daily" class="chart-host"></div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <h3>近 6 个月支出</h3>
+        <div id="s-trend-seg" class="seg mini" role="group" aria-label="月度对比视图切换"></div>
+      </div>
+      <div id="s-trend" class="chart-host"></div>
+    </div>
+  </section>
+
+  <!-- Tab3 预算 -->
+  <section id="view-budget" class="view" hidden>
+    <header class="topbar"><h2 class="topbar-title plain">预算</h2></header>
+    <div id="b-banner" class="alert-banner" hidden></div>
+    <div id="b-body"></div>
+  </section>
+
+  <!-- Tab4 我的 -->
+  <section id="view-mine" class="view" hidden>
+    <header class="topbar"><h2 class="topbar-title plain">我的</h2></header>
+    <div id="m-body"></div>
+  </section>
+
+  <button id="fab" class="fab" aria-label="记一笔">＋</button>
+
+  <nav class="tabbar" role="tablist">
+    <button class="tab" data-tab="detail" role="tab" aria-selected="true"><span class="t-ico">📋</span><span>明细</span></button>
+    <button class="tab" data-tab="stats" role="tab" aria-selected="false"><span class="t-ico">📊</span><span>统计</span></button>
+    <button class="tab" data-tab="budget" role="tab" aria-selected="false"><span class="t-ico">🎯</span><span>预算</span><span id="budget-dot" class="dot" hidden></span></button>
+    <button class="tab" data-tab="mine" role="tab" aria-selected="false"><span class="t-ico">⚙️</span><span>我的</span></button>
+  </nav>
+</div>
+
+<!-- 通用弹层：底部抽屉 / 居中确认框 / 图表 tooltip -->
+<div id="overlay" class="overlay" hidden></div>
+<div id="sheet" class="sheet" role="dialog" aria-modal="true" hidden></div>
+<div id="chart-tip" class="chart-tip" hidden></div>
+
+<script src="js/store.js" defer></script>
+<script src="js/charts.js" defer></script>
+<script src="js/auth.js" defer></script>
+<script src="js/app.js" defer></script>
+</body>
+</html>

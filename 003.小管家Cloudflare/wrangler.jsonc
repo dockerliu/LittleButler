@@ -1,0 +1,31 @@
+// 小管家 Cloudflare 资源绑定声明
+// 本地开发：wrangler/astro platformProxy 按本地 miniflare 模拟以下绑定
+// 部署：先在 Cloudflare 控制台或 wrangler CLI 创建同名资源并填入真实 id
+{
+  "name": "xiaoguanjia",
+  "compatibility_date": "2026-10-01",
+  "pages_build_output_dir": "dist",
+  // D1：结构化数据（账单/分类/账户/供应商/预算/图片元数据/用户）
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "xiaoguanjia-db",
+      "database_id": "<D1_DATABASE_ID>",
+      "migrations_dir": "migrations"
+    }
+  ],
+  // R2：图片二进制（按 user_id 隔离，D1 只存元数据）
+  "r2_buckets": [
+    {
+      "binding": "MY_BUCKET",
+      "bucket_name": "xiaoguanjia-photos"
+    }
+  ],
+  // KV：会话令牌 / 登录频控 / 用户偏好与预算提醒标记
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "<KV_NAMESPACE_ID>"
+    }
+  ]
+}
