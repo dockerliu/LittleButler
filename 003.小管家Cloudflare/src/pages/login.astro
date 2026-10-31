@@ -2,9 +2,8 @@
 // V2.0 云端账户：登录/注册页（对应 V1.0.1 的本机账户锁屏，PRD 4.7）
 import Base from '../layouts/Base.astro';
 import { getSession } from '../lib/auth';
-import { env } from '../lib/db';
 
-const session = await getSession(env(Astro).KV, Astro);
+const session = await getSession((Astro as any).env.xgj_kv, Astro);
 if (session) return Astro.redirect('/');
 ---
 

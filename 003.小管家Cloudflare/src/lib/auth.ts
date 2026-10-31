@@ -97,7 +97,7 @@ export async function destroySession(kv: KVNamespace, c: APIContext): Promise<vo
 
 /** API 路由专用：未登录直接抛 401 */
 export async function requireUser(c: APIContext): Promise<SessionValue> {
-  const s = await getSession(c.locals.runtime.runtime.env.KV, c);
+  const s = await getSession((c as APIContext & { env: any }).env.xgj_kv, c);
   if (!s) throw new ApiError('请先登录', 401);
   return s;
 }

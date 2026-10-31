@@ -2,14 +2,23 @@
 // 应用壳（SSR 门）：无会话 → 302 /login；有会话渲染四 Tab 骨架，交互在客户端 TS
 import Base from '../layouts/Base.astro';
 import { getSession } from '../lib/auth';
-import { env } from '../lib/db';
 
-const session = await getSession(env(Astro).KV, Astro);
+const session = await getSession((Astro as any).env.xgj_kv, Astro);
 if (!session) return Astro.redirect('/login');
 ---
 
+---
+// 临时调试代码
+const runtime = Astro.locals.runtime;
+console.log("ALL BINDINGS:", runtime?.env);
+const kv = runtime?.env?.xgj_kv;
+---
+<pre>{JSON.stringify(Object.keys(runtime?.env || {}), null, 2)}</pre>
+
 <Base title="小管家 · 轻松记账">
   <div id="toast" class="toast" role="status" hidden></div>
+
+
 
   <div id="app-root" class="app">
 
